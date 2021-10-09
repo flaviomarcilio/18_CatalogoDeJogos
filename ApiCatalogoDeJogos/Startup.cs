@@ -31,7 +31,12 @@ namespace ApiCatalogoDeJogos
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ApiCatalogoDeJogos", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "API Catálogo De Jogos", 
+                    Version = "v1",
+                    Description = "ASP.NET Core web API"
+                });
 
                 var basePath = AppDomain.CurrentDomain.BaseDirectory;
                 var fileName = typeof(Startup).GetTypeInfo().Assembly.GetName().Name + ".xml";

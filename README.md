@@ -68,3 +68,4 @@ dotnet run --project ApiCatalogoDejogos
 ## Melhorias
 
 - Inclusão de novos atributos na entidade ``Jogo``
+- Personalização da *Documentação*

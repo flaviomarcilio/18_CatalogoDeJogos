@@ -45,7 +45,7 @@ namespace ApiCatalogoDeJogos.Repositories
                 new Jogo {
                     Id = Guid.Parse("da033439-f352-4539-879f-515759312d53"),
                     Nome = "FIFA 14",
-                    Publicadora = "	Electronic Arts",
+                    Publicadora = "Electronic Arts",
                     Serie = "FIFA",
                     Lancamento = new DateTime(2013, 9, 24)
                 }
