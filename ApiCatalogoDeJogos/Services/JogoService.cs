@@ -27,8 +27,9 @@ namespace ApiCatalogoDeJogos.Services
             {
                 Id = jogo.Id,
                 Nome = jogo.Nome,
-                Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Publicadora = jogo.Publicadora,
+                Serie = jogo.Serie,
+                Lancamento = jogo.Lancamento
             }).ToList();
         }
 
@@ -43,14 +44,15 @@ namespace ApiCatalogoDeJogos.Services
             {
                 Id = jogo.Id,
                 Nome = jogo.Nome,
-                Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Publicadora = jogo.Publicadora,
+                Serie = jogo.Serie,
+                Lancamento = jogo.Lancamento
             };
         }
 
         public async Task<JogoViewModel> Inserir(JogoInputModel jogo)
         {
-            var entidadeJogo = await _jogoRepository.Obter(jogo.Nome, jogo.Produtora);
+            var entidadeJogo = await _jogoRepository.Obter(jogo.Nome, jogo.Publicadora);
 
             if (entidadeJogo.Count > 0)
                 throw new JogoJaCadastradoException();
@@ -59,8 +61,9 @@ namespace ApiCatalogoDeJogos.Services
             {
                 Id = Guid.NewGuid(),
                 Nome = jogo.Nome,
-                Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Publicadora = jogo.Publicadora,
+                Serie = jogo.Serie,
+                Lancamento = jogo.Lancamento
             };
 
             await _jogoRepository.Inserir(jogoInsert);
@@ -69,33 +72,35 @@ namespace ApiCatalogoDeJogos.Services
             {
                 Id = jogoInsert.Id,
                 Nome = jogo.Nome,
-                Produtora = jogo.Produtora,
-                Preco = jogo.Preco
+                Publicadora = jogo.Publicadora,
+                Serie = jogo.Serie,
+                Lancamento = jogo.Lancamento
             };
         }
 
         public async Task Atualizar(Guid id, JogoInputModel jogo)
-        {
-            var entidadejogo = await _jogoRepository.Obter(id);
-
-            if (entidadejogo == null)
-                throw new JogoNaoCadastradoException();
-
-            entidadejogo.Nome = jogo.Nome;
-            entidadejogo.Produtora = jogo.Produtora;
-            entidadejogo.Preco = jogo.Preco;
-
-            await _jogoRepository.Atualizar(entidadejogo);
-        }
-
-        public async Task Atualizar(Guid id, double preco)
         {
             var entidadeJogo = await _jogoRepository.Obter(id);
 
             if (entidadeJogo == null)
                 throw new JogoNaoCadastradoException();
 
-            entidadeJogo.Preco = preco;
+            entidadeJogo.Nome = jogo.Nome;
+            entidadeJogo.Publicadora = jogo.Publicadora;
+            entidadeJogo.Serie = jogo.Serie;
+            entidadeJogo.Lancamento = jogo.Lancamento;
+
+            await _jogoRepository.Atualizar(entidadeJogo);
+        }
+
+        public async Task Atualizar(Guid id, DateTime lancamento)
+        {
+            var entidadeJogo = await _jogoRepository.Obter(id);
+
+            if (entidadeJogo == null)
+                throw new JogoNaoCadastradoException();
+
+            entidadeJogo.Lancamento = lancamento;
 
             await _jogoRepository.Atualizar(entidadeJogo);
         }

@@ -108,15 +108,15 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// Atualizar o preço de um jogo
         /// </summary>
         /// <param name="idJogo">Id do jogo a ser atualizado</param>
-        /// <param name="preco">Novo preço do jogo</param>
-        /// <response code="200">Caso o preço seja atualizado com sucesso</response>
+        /// <param name="lancamento">Nova data de lançamento</param>
+        /// <response code="200">Caso a data seja atualizada com sucesso</response>
         /// <response code="404">Caso não exista um jogo com este Id</response>
-        [HttpPatch("{idJogo:guid}/preco/{preco:double}")]
-        public async Task<ActionResult> AtualizarJogo([FromRoute] Guid idJogo, [FromRoute] double preco)
+        [HttpPatch("{idJogo:guid}/lancamento/{lancamento:DateTime}")]
+        public async Task<ActionResult> AtualizarJogo([FromRoute] Guid idJogo, [FromRoute] DateTime lancamento)
         {
             try
             {
-                await _jogoService.Atualizar(idJogo, preco);
+                await _jogoService.Atualizar(idJogo, lancamento);
 
                 return Ok();
             }

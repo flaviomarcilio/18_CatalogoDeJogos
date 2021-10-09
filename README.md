@@ -5,7 +5,7 @@
 
 ## Descrição
 
-Arquitetura base de uma API Rest de Jogos criada em .NET5.0. O projeto base foi desenvolvido utilizando algumas boas práticas como, por exemplo, **Documentação** feita com o ***swagger***, utilização do **Padrão de Projeto** ***Repository***
+Arquitetura base de uma API Rest de Jogos criada em .NET5.0. O projeto base foi desenvolvido utilizando algumas boas práticas como, por exemplo, **Documentação** feita com o ***swagger***, utilização do **Padrão de Projeto** ***Repository***, **GET** com paginação. Algumas melhorias foram propostas e desenvolvidas neste projeto.
 
 - Especialista: Thiago Campos de Oliveira
 - Projeto base: https://github.com/ThiagoAcam/ApiCatalogoJogos
@@ -26,7 +26,7 @@ Arquitetura base de uma API Rest de Jogos criada em .NET5.0. O projeto base foi 
 
 - **Entity**: É a representação da tabela no banco de dados.
 
-## Verbos HTTP (https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods)
+## Verbos HTTP - Para mais informação [clique aqui](https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Methods)
 - **GET**
     > O método GET solicita a representação de um recurso específico. Requisições utilizando o método GET devem retornar apenas dados. 
     > - Em caso de sucesso, retorna o código HTTP  200 (OK). 
@@ -64,3 +64,7 @@ Para executar o aplicativo utilizando a CLI:
 ```shell
 dotnet run --project ApiCatalogoDejogos
 ```
+
+## Melhorias
+
+- Inclusão de novos atributos na entidade ``Jogo``

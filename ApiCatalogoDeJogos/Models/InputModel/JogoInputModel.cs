@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiCatalogoDeJogos.Models.InputModel
 {
@@ -9,11 +10,14 @@ namespace ApiCatalogoDeJogos.Models.InputModel
         public string Nome { get; set; }
 
         [Required]
-        [StringLength(100, MinimumLength = 1, ErrorMessage = "O nome da produtora deve conter entre 1 e 100 caracteres")]
-        public string Produtora { get; set; }
+        [StringLength(100, MinimumLength = 1, ErrorMessage = "O nome da publicadora deve conter entre 1 e 100 caracteres")]
+        public string Publicadora { get; set; }
 
         [Required]
-        [Range(1, 1000, ErrorMessage = "O preço deve ser de no mínimo 1 real e no máximo 1000 reais")]
-        public double Preco { get; set; }
+        [StringLength(100, MinimumLength = 3, ErrorMessage = "A série deve conter entre 3 e 100 caracteres")]
+        public string Serie { get; set; }
+
+        [Required]
+        public DateTime Lancamento { get; set; }
     }
 }

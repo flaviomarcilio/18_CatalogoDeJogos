@@ -32,8 +32,9 @@ namespace ApiCatalogoDeJogos.Repositories
                 {
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
-                    Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double)sqlDataReader["Preco"]
+                    Publicadora = (string)sqlDataReader["Publicadora"],
+                    Serie = (string)sqlDataReader["Serie"],
+                    Lancamento = (DateTime)sqlDataReader["Lancamento"]
                 });
             }
 
@@ -58,8 +59,9 @@ namespace ApiCatalogoDeJogos.Repositories
                 {
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
-                    Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double)sqlDataReader["Preco"]
+                    Publicadora = (string)sqlDataReader["Publicadora"],
+                    Serie = (string)sqlDataReader["Serie"],
+                    Lancamento = (DateTime)sqlDataReader["Lancamento"]
                 };
             }
 
@@ -68,11 +70,11 @@ namespace ApiCatalogoDeJogos.Repositories
             return jogo;
         }
 
-        public async Task<List<Jogo>> Obter(string nome, string produtora)
+        public async Task<List<Jogo>> Obter(string nome, string publicadora)
         {
             var jogos = new List<Jogo>();
 
-            var comando = $"select * from Jogos where Nome = '{nome}' and Produtora = '{produtora}'";
+            var comando = $"select * from Jogos where Nome = '{nome}' and publicadora = '{publicadora}'";
 
             await sqlConnection.OpenAsync();
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
@@ -84,8 +86,9 @@ namespace ApiCatalogoDeJogos.Repositories
                 {
                     Id = (Guid)sqlDataReader["Id"],
                     Nome = (string)sqlDataReader["Nome"],
-                    Produtora = (string)sqlDataReader["Produtora"],
-                    Preco = (double)sqlDataReader["Preco"]
+                    Publicadora = (string)sqlDataReader["Publicadora"],
+                    Serie = (string)sqlDataReader["Serie"],
+                    Lancamento = (DateTime)sqlDataReader["Lancamento"]
                 });
             }
 
@@ -96,7 +99,7 @@ namespace ApiCatalogoDeJogos.Repositories
 
         public async Task Inserir(Jogo jogo)
         {
-            var comando = $"insert Jogos (Id, Nome, Produtora, Preco) values ('{jogo.Id}', '{jogo.Nome}', '{jogo.Produtora}', {jogo.Preco.ToString().Replace(",", ".")})";
+            var comando = $"insert Jogos (Id, Nome, Publicadora, Serie, Lancamento) values ('{jogo.Id}', '{jogo.Nome}', '{jogo.Publicadora}', '{jogo.Serie}', '{jogo.Lancamento})";
 
             await sqlConnection.OpenAsync();
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
@@ -106,7 +109,7 @@ namespace ApiCatalogoDeJogos.Repositories
 
         public async Task Atualizar(Jogo jogo)
         {
-            var comando = $"update Jogos set Nome = '{jogo.Nome}', Produtora = '{jogo.Produtora}', Preco = {jogo.Preco.ToString().Replace(",", ".")} where Id = '{jogo.Id}'";
+            var comando = $"update Jogos set Nome = '{jogo.Nome}', publicadora = '{jogo.Publicadora}', Serie = {jogo.Serie} where Id = '{jogo.Id}'";
 
             await sqlConnection.OpenAsync();
             SqlCommand sqlCommand = new SqlCommand(comando, sqlConnection);
