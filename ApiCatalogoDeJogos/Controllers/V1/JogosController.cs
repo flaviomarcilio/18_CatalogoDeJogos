@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiCatalogoDeJogos.Exceptions;
+using ApiCatalogoDeJogos.Filters;
+using ApiCatalogoDeJogos.Models.ErrorModel;
 using ApiCatalogoDeJogos.Models.InputModel;
 using ApiCatalogoDeJogos.Models.ViewModel;
 using ApiCatalogoDeJogos.Services;
@@ -41,7 +43,7 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         {
             var jogos = await _jogoService.Obter(pagina, quantidade);
 
-            if (jogos.Count() == 0)
+            if (jogos.Count == 0)
                 return NoContent();
 
             return Ok(jogos);
@@ -54,14 +56,14 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <response code="200">Retorna o jogo filtrado</response>
         /// <response code="404">Caso não haja jogo com este ID</response>
         [HttpGet("{idJogo:guid}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(JogoViewModel), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GenericErrorModel), StatusCodes.Status404NotFound)]
         public async Task<ActionResult<JogoViewModel>> Obter([FromRoute] Guid idJogo)
         {
             var jogo = await _jogoService.Obter(idJogo);
 
             if (jogo == null)
-                return NotFound();
+                return NotFound("Não existe este jogo");
 
             return Ok(jogo);
         }
@@ -72,12 +74,12 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <remarks>
         /// Exemplo de requisição:
         /// 
-        ///     POST /Jogos
+        ///     POST api/V1/Jogos
         ///     {
-        ///        "Nome": "FIFA 14",
-        ///        "Publicadora": "EA Games",
-        ///        "Serie": "FIFA",
-        ///        "Lancamento": "26-10-2004"
+        ///        "nome": "FIFA 14",
+        ///        "publicadora": "EA Games",
+        ///        "serie": "FIFA",
+        ///        "lancamento": "2004-10-26"
         ///     }
         ///
         /// </remarks>
@@ -87,16 +89,17 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <response code="400">Caso seja feita uma requisição sem corpo</response>
         /// <response code="422">Caso já exista um jogo com mesmo nome para a mesma produtora</response>
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
+        [ProducesResponseType(typeof(JogoViewModel), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ValidationErrorsModel) , StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(GenericErrorModel), StatusCodes.Status422UnprocessableEntity)]
+        [ValidationModelState]
         public async Task<ActionResult<JogoViewModel>> InserirJogo([FromBody] JogoInputModel jogoInputModel)
-        {
+        {            
             try
             {
                 var jogo = await _jogoService.Inserir(jogoInputModel);
 
-                return CreatedAtRoute("/Jogos", jogo);
+                return Created("", jogo);
 
             }
             catch (JogoJaCadastradoException)
@@ -114,7 +117,7 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <response code="404">Caso não exista um jogo com este ID</response>
         [HttpPut("{idJogo:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GenericErrorModel), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> AtualizarJogo([FromRoute] Guid idJogo, [FromBody] JogoInputModel jogoInputModel)
         {
             try
@@ -132,13 +135,13 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <summary>
         /// Atualizar a data de lançamento de um jogo
         /// </summary>
-        /// <param name="idJogo">Id do jogo a ser atualizado</param>
+        /// <param name="idJogo">ID do jogo a ser atualizado</param>
         /// <param name="lancamento">Nova data de lançamento</param>
         /// <response code="200">Caso a data seja atualizada com sucesso</response>
-        /// <response code="404">Caso não exista um jogo com este Id</response>
-        [HttpPatch("{idJogo:guid}/lancamento/{lancamento:DateTime}")]
+        /// <response code="404">Caso não exista um jogo com este ID</response>
+        [HttpPatch("{idJogo:guid}/lancamento/{lancamento:datetime}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GenericErrorModel), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> AtualizarJogo([FromRoute] Guid idJogo, [FromRoute] DateTime lancamento)
         {
             try
@@ -156,12 +159,12 @@ namespace ApiCatalogoDeJogos.Controllers.V1
         /// <summary>
         /// Excluir um jogo
         /// </summary>
-        /// <param name="idJogo">Id do jogo a ser excluído</param>
-        /// <response code="200">Caso o preço seja atualizado com sucesso</response>
-        /// <response code="404">Caso não exista um jogo com este Id</response>
+        /// <param name="idJogo">ID do jogo a ser excluído</param>
+        /// <response code="200">Caso o jogo seja excluído com sucesso</response>
+        /// <response code="404">Caso não exista um jogo com este ID</response>
         [HttpDelete("{idJogo:guid}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(GenericErrorModel), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> ApagarJogo([FromRoute] Guid idJogo)
         {
             try

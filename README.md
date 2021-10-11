@@ -68,4 +68,7 @@ dotnet run --project ApiCatalogoDejogos
 ## Melhorias
 
 - Inclusão de novos atributos na entidade ``Jogo``
-- Personalização da *Documentação*
+- Personalização da ***Documentação***
+- Personalização das ***mensagens de erros de validação***
+- Implementação de ***filtros***:
+  > Os Filtros no ASP.NET Core permitem a execução de código antes ou depois de determinados estágios do pipeline de processamento de solicitações. ([documentação](https://docs.microsoft.com/en-us/aspnet/core/mvc/controllers/filters?view=aspnetcore-5.0))

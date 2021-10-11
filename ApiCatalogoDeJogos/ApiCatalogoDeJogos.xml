@@ -31,12 +31,12 @@
              <remarks>
              Exemplo de requisição:
              
-                 POST /Jogos
+                 POST api/V1/Jogos
                  {
-                    "Nome": "FIFA 14",
-                    "Publicadora": "EA Games",
-                    "Serie": "FIFA",
-                    "Lancamento": "26-10-2004"
+                    "nome": "FIFA 14",
+                    "publicadora": "EA Games",
+                    "serie": "FIFA",
+                    "lancamento": "2004-10-26"
                  }
             
              </remarks>
@@ -59,18 +59,18 @@
             <summary>
             Atualizar a data de lançamento de um jogo
             </summary>
-            <param name="idJogo">Id do jogo a ser atualizado</param>
+            <param name="idJogo">ID do jogo a ser atualizado</param>
             <param name="lancamento">Nova data de lançamento</param>
             <response code="200">Caso a data seja atualizada com sucesso</response>
-            <response code="404">Caso não exista um jogo com este Id</response>
+            <response code="404">Caso não exista um jogo com este ID</response>
         </member>
         <member name="M:ApiCatalogoDeJogos.Controllers.V1.JogosController.ApagarJogo(System.Guid)">
             <summary>
             Excluir um jogo
             </summary>
-            <param name="idJogo">Id do jogo a ser excluído</param>
-            <response code="200">Caso o preço seja atualizado com sucesso</response>
-            <response code="404">Caso não exista um jogo com este Id</response>
+            <param name="idJogo">ID do jogo a ser excluído</param>
+            <response code="200">Caso o jogo seja excluído com sucesso</response>
+            <response code="404">Caso não exista um jogo com este ID</response>
         </member>
     </members>
 </doc>

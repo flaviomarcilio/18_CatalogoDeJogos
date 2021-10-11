@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ApiCatalogoDeJogos.Models.ViewModel
 {
@@ -8,6 +9,8 @@ namespace ApiCatalogoDeJogos.Models.ViewModel
         public string Nome { get; set; }
         public string Publicadora { get; set; }
         public string Serie { get; set; }
+
+        [DataType(DataType.Date)]
         public DateTime Lancamento { get; set; }
     }
 }
